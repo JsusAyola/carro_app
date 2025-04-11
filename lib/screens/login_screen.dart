@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'car_list_screen.dart';
+import 'home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
@@ -11,14 +13,17 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _passwordController = TextEditingController();
 
   void login() {
-    if (_usernameController.text == 'admin' && _passwordController.text == 'admin') {
-      Navigator.push(
+    final username = _usernameController.text.trim();
+    final password = _passwordController.text.trim();
+
+    if (username == 'admin' && password == 'admin') {
+      Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => CarListScreen()),
+        MaterialPageRoute(builder: (_) => const HomeScreen()),
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Usuario o contraseña incorrectos')),
+        const SnackBar(content: Text('Usuario o contraseña incorrectos')),
       );
     }
   }
@@ -26,74 +31,72 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFF5E9F8), // Fondo suave
+      backgroundColor: const Color(0xFFF5E9F8),
       body: Center(
         child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  'Sign In',
-                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const Text(
+                'Sign In',
+                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 20),
+              TextField(
+                controller: _usernameController,
+                decoration: const InputDecoration(
+                  labelText: 'User Name',
+                  border: UnderlineInputBorder(),
                 ),
-                SizedBox(height: 20),
-                TextField(
-                  controller: _usernameController,
-                  decoration: InputDecoration(
-                    labelText: 'User Name',
-                    border: UnderlineInputBorder(),
-                  ),
+              ),
+              const SizedBox(height: 20),
+              TextField(
+                controller: _passwordController,
+                decoration: const InputDecoration(
+                  labelText: 'Password',
+                  border: UnderlineInputBorder(),
                 ),
-                SizedBox(height: 20),
-                TextField(
-                  controller: _passwordController,
-                  decoration: InputDecoration(
-                    labelText: 'Password',
-                    border: UnderlineInputBorder(),
-                  ),
-                  obscureText: true,
-                ),
-                SizedBox(height: 30),
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: login,
-                    child: Text('SIGN IN'),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue[400],  // Cambiado de 'primary' a 'backgroundColor'
-                      padding: EdgeInsets.symmetric(vertical: 16),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
+                obscureText: true,
+              ),
+              const SizedBox(height: 30),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: login,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue[400],
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
                     ),
                   ),
+                  child: const Text('SIGN IN'),
                 ),
-                SizedBox(height: 10),
-                TextButton(
-                  onPressed: () {},
-                  child: Text(
-                    'Forgot Password?',
-                    style: TextStyle(color: Colors.blue[400]),
-                  ),
+              ),
+              const SizedBox(height: 10),
+              TextButton(
+                onPressed: () {},
+                child: Text(
+                  'Forgot Password?',
+                  style: TextStyle(color: Colors.blue[400]),
                 ),
-                SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text('New User'),
-                    TextButton(
-                      onPressed: () {},
-                      child: Text(
-                        'SIGN UP',
-                        style: TextStyle(color: Colors.blue[400]),
-                      ),
+              ),
+              const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text('New User'),
+                  TextButton(
+                    onPressed: () {},
+                    child: Text(
+                      'SIGN UP',
+                      style: TextStyle(color: Colors.blue[400]),
                     ),
-                  ],
-                )
-              ],
-            ),
+                  ),
+                ],
+              )
+            ],
           ),
         ),
       ),
